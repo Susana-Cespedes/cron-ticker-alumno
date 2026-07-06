@@ -1,0 +1,31 @@
+name: CI Pipeline       #nombre visible en la pestaña de Actions
+
+on:      
+               # eventos que dispara el workflow
+  push:                 #cuando alguien hace push a la rama main
+    branches: [main]
+    
+  pull_request:         #cuando alguien hace un pull request a la rama main
+    branches: [main]
+
+  workflow_dispatch:   # permite ejecutar el workflow manualmente desde la pestaña de Actions
+
+jobs:                 # define los jobs que se ejecutarán en el workflow
+  run-test:               # nombre del job
+    name: Run Tests 
+    runs-on: ubuntu-latest   # tipo de runner (maquina virtual) define el sistema operativo donde se ejecutará el job
+
+    steps:              # define los pasos en orden secuencial que se ejecutarán en el job
+      - name: Checkout Code   
+        uses: actions/checkout@v4  # clonar el repo en el runner / paso para hacer checkout del código fuente
+ 
+      - name: Set up Node.js   # paso para configurar Node.js
+        uses: actions/setup-node@v4  #instala Node en el runner
+        with:
+          node-version: '20'  # especifica la versión de Node.js a instalar
+
+      - name: Install Dependencies   # paso para instalar dependencias
+        run: npm ci
+
+      - name: Run Tests   # paso para ejecutar pruebas
+        run: npm test       #correr tests de cron-ticket
