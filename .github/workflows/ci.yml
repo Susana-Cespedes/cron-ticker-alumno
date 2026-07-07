@@ -42,7 +42,11 @@ jobs:
         - name: Deploy API
           run: |
             echo "Deploying with key ${{secrets.API_KEY}}"
-            
+
+        - name: Deploy API2
+          run: |
+            echo "Deploying with key2 ${{secrets.API_KEY2}}"
+
         #Variables a nivel del step
         - name: Build
           run: npm run build
